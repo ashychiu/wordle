@@ -1,8 +1,8 @@
 import './App.css';
 import React, { useState } from 'react';
+import { words } from './words';
 
 export default function App() {
-  const words = ['SPEND', 'APPLE', 'CRANE', 'BRICK', 'PLANE'];
   const [secret, setSecret] = useState(() => {
     return words[Math.floor(Math.random() * words.length)];
   });
