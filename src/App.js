@@ -46,7 +46,6 @@ export default function App() {
     setInput('');
     setSecret(words[Math.floor(Math.random() * words.length)]);
   };
-  const isDisabled = attempt >= MAX_ATTEMPTS;
 
   return (
     <>
@@ -77,15 +76,14 @@ export default function App() {
               maxLength={MAX_LENGTH}
               value={input}
               onChange={handleChange}
-              disabled={isDisabled}
             />
 
             <button
               onClick={handleSubmit}
-              disabled={!input || isDisabled}
+              disabled={!input}
               className="button"
               style={{
-                cursor: !input || isDisabled ? 'not-allowed' : 'pointer',
+                cursor: !input ? 'not-allowed' : 'pointer',
                 marginLeft: '10px',
               }}
             >
@@ -134,7 +132,7 @@ export default function App() {
       </div>
       <footer className="footer">
         <a href="https://github.com/ashychiu/" target="_blank" rel="noreferrer">
-          <span>Created by Ashley Chiu © 2026</span>
+          <span>Created by Ashley Chiu</span>
         </a>
       </footer>
     </>
