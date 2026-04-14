@@ -2,8 +2,8 @@ import './App.css';
 import React, { useState } from 'react';
 
 export default function App() {
-  const [secret] = useState(() => {
-    const words = ['SPEND', 'APPLE', 'CRANE', 'BRICK', 'PLANE'];
+  const words = ['SPEND', 'APPLE', 'CRANE', 'BRICK', 'PLANE'];
+  const [secret, setSecret] = useState(() => {
     return words[Math.floor(Math.random() * words.length)];
   });
   const MAX_LENGTH = 5;
@@ -38,38 +38,71 @@ export default function App() {
     setAttempt((prev) => prev + 1);
     if (input.toUpperCase() === secret.toUpperCase()) {
       alert('Congratulations! You won!');
-      setSubmission([]);
-      setAttempt(0);
+      handleReset();
     }
   };
 
+  const handleReset = () => {
+    setSubmission([]);
+    setAttempt(0);
+    setInput('');
+    setSecret(words[Math.floor(Math.random() * words.length)]);
+  };
   const isDisabled = attempt >= MAX_ATTEMPTS;
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        gap: '8px',
+      }}
+    >
       <h2>Hello, Wordle</h2>
       <div>
         Attempt: {attempt}/{MAX_ATTEMPTS}
       </div>
 
-      <input
-        type="text"
-        maxLength={MAX_LENGTH}
-        value={input}
-        onChange={handleChange}
-        disabled={isDisabled}
-      />
+      {attempt < MAX_ATTEMPTS ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <input
+            type="text"
+            maxLength={MAX_LENGTH}
+            value={input}
+            onChange={handleChange}
+            disabled={isDisabled}
+          />
 
-      <button
-        onClick={handleSubmit}
-        disabled={!input || isDisabled}
-        style={{
-          cursor: !input || isDisabled ? 'not-allowed' : 'pointer',
-          marginLeft: '10px',
-        }}
-      >
-        Submit
-      </button>
+          <button
+            onClick={handleSubmit}
+            disabled={!input || isDisabled}
+            style={{
+              cursor: !input || isDisabled ? 'not-allowed' : 'pointer',
+              marginLeft: '10px',
+            }}
+          >
+            Submit
+          </button>
+        </form>
+      ) : (
+        <>
+          {' '}
+          <div>
+            Game Over! The secret word was: <strong>{secret}</strong>
+          </div>
+          <button style={{ cursor: 'pointer' }} onClick={handleReset}>
+            Play Again
+          </button>
+        </>
+      )}
 
       <div style={{ marginTop: '20px' }}>
         {submission.map((guess, i) => (
