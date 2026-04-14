@@ -14,16 +14,14 @@ export default function App() {
   const [attempt, setAttempt] = useState(0);
 
   const secretArray = secret.toUpperCase().split('');
-  const correct = '#8fea87';
-  const present = '#ffc425';
-  const absent = '#c95858';
+  const color = { correct: '#8fea87', present: '#ffc425', absent: '#c95858' };
 
   const getResult = (letter, index) => {
     const l = letter.toUpperCase();
 
-    if (secretArray[index] === l) return correct;
-    if (secretArray.includes(l)) return present;
-    return absent;
+    if (secretArray[index] === l) return color.correct;
+    if (secretArray.includes(l)) return color.present;
+    return color.absent;
   };
 
   const handleChange = (e) => {
@@ -61,7 +59,7 @@ export default function App() {
         gap: '8px',
       }}
     >
-      <h2>Hello, Wordle</h2>
+      <h1 className="cell">Hello, Wordle</h1>
       <div>
         Attempt: {attempt}/{MAX_ATTEMPTS}
       </div>
@@ -84,6 +82,7 @@ export default function App() {
           <button
             onClick={handleSubmit}
             disabled={!input || isDisabled}
+            className="button"
             style={{
               cursor: !input || isDisabled ? 'not-allowed' : 'pointer',
               marginLeft: '10px',
@@ -98,7 +97,11 @@ export default function App() {
           <div>
             Game Over! The secret word was: <strong>{secret}</strong>
           </div>
-          <button style={{ cursor: 'pointer' }} onClick={handleReset}>
+          <button
+            className="button"
+            style={{ cursor: 'pointer' }}
+            onClick={handleReset}
+          >
             Play Again
           </button>
         </>
@@ -110,6 +113,7 @@ export default function App() {
             {guess.split('').map((letter, j) => (
               <div
                 key={j}
+                className="cell"
                 style={{
                   width: '40px',
                   height: '40px',
