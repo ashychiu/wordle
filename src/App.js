@@ -49,87 +49,94 @@ export default function App() {
   const isDisabled = attempt >= MAX_ATTEMPTS;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        gap: '8px',
-      }}
-    >
-      <h1 className="cell">Hello, Wordle</h1>
-      <div>
-        Attempt: {attempt}/{MAX_ATTEMPTS}
-      </div>
+    <>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '90vh',
+          gap: '8px',
+        }}
+      >
+        <h1 className="cell">Hello, Wordle</h1>
+        <div>
+          Attempt: {attempt}/{MAX_ATTEMPTS}
+        </div>
 
-      {attempt < MAX_ATTEMPTS ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <input
-            type="text"
-            maxLength={MAX_LENGTH}
-            value={input}
-            onChange={handleChange}
-            disabled={isDisabled}
-          />
-
-          <button
-            onClick={handleSubmit}
-            disabled={!input || isDisabled}
-            className="button"
-            style={{
-              cursor: !input || isDisabled ? 'not-allowed' : 'pointer',
-              marginLeft: '10px',
+        {attempt < MAX_ATTEMPTS ? (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
             }}
           >
-            Submit
-          </button>
-        </form>
-      ) : (
-        <>
-          {' '}
-          <div>
-            Game Over! The secret word was: <strong>{secret}</strong>
-          </div>
-          <button
-            className="button"
-            style={{ cursor: 'pointer' }}
-            onClick={handleReset}
-          >
-            Play Again
-          </button>
-        </>
-      )}
+            <input
+              type="text"
+              maxLength={MAX_LENGTH}
+              value={input}
+              onChange={handleChange}
+              disabled={isDisabled}
+            />
 
-      <div style={{ marginTop: '20px' }}>
-        {submission.map((guess, i) => (
-          <div key={i} style={{ display: 'flex', marginTop: '10px' }}>
-            {guess.split('').map((letter, j) => (
-              <div
-                key={j}
-                className="cell"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid black',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: getResult(letter, j),
-                }}
-              >
-                {letter}
-              </div>
-            ))}
-          </div>
-        ))}
+            <button
+              onClick={handleSubmit}
+              disabled={!input || isDisabled}
+              className="button"
+              style={{
+                cursor: !input || isDisabled ? 'not-allowed' : 'pointer',
+                marginLeft: '10px',
+              }}
+            >
+              Submit
+            </button>
+          </form>
+        ) : (
+          <>
+            {' '}
+            <div>
+              Game Over! The secret word was: <strong>{secret}</strong>
+            </div>
+            <button
+              className="button"
+              style={{ cursor: 'pointer' }}
+              onClick={handleReset}
+            >
+              Play Again
+            </button>
+          </>
+        )}
+
+        <div style={{ marginTop: '20px' }}>
+          {submission.map((guess, i) => (
+            <div key={i} style={{ display: 'flex', marginTop: '10px' }}>
+              {guess.split('').map((letter, j) => (
+                <div
+                  key={j}
+                  className="cell"
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    border: '1px solid black',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: getResult(letter, j),
+                  }}
+                >
+                  {letter}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      <footer className="footer">
+        <a href="https://github.com/ashychiu/" target="_blank" rel="noreferrer">
+          <span>Created by Ashley Chiu © 2026</span>
+        </a>
+      </footer>
+    </>
   );
 }
